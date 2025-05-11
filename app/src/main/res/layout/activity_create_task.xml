@@ -106,14 +106,14 @@
             android:orientation="horizontal">
 
             <Button
-                android:id="@+id/btnAdd"
+                android:id="@+id/createTaskBtn"
                 android:layout_width="150dp"
                 android:layout_height="55dp"
                 android:layout_marginRight="22dp"
                 android:backgroundTint="#3B3B3B"
                 android:elevation="30dp"
                 android:fontFamily="monospace"
-                android:onClick="addTask"
+                android:onClick="createTask"
                 android:text="️☑️ Add Task"
                 android:textColor="#FFFFFF"
                 android:textSize="15sp"
