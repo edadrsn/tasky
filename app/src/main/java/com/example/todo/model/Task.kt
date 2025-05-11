@@ -1,4 +1,5 @@
 package com.example.todo.model
 
-class Task {
+data class Task(val task:String) {
+    
 }
