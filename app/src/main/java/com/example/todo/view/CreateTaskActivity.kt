@@ -1,12 +1,11 @@
-package com.example.todo
+package com.example.todo.view
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.todo.databinding.ActivityCreateTaskBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -28,16 +27,14 @@ class CreateTaskActivity : AppCompatActivity() {
 
     }
 
-    fun addTask(view: View) {
-        //Kullanıcı giriş yaptıysa bilgilerini al
+    //Verileri firestora kaydet
+    fun createTask(view: View) {
+        // Kullanıcı giriş yaptıysadevam et
         if (auth.currentUser != null) {
             val taskMap = mutableMapOf<String, Any>()
-            taskMap.put(
-                "taskTitle",
-                binding.taskText!!.text.toString()
-            )
+            taskMap.put("taskTitle", binding.taskText!!.text.toString())
 
-            //Firestore'a gönderiyi ekle
+            // Firestore'a "Tasks" koleksiyonuna bu yeni veriyi ekleme
             firestore.collection("Tasks").add(taskMap)
                 .addOnSuccessListener {
                     finish()
@@ -47,7 +44,9 @@ class CreateTaskActivity : AppCompatActivity() {
                         .show()
                 }
         }
+
+        // Yeni task eklendi TaskList Activity'sine git
+        val intent = Intent(this@CreateTaskActivity, TaskList::class.java)
+        startActivity(intent)
     }
-
-
 }
