@@ -38,7 +38,7 @@
             android:layout_width="243dp"
             android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
-            android:text="TO-DO LIST"
+            android:text="TO-DO"
             android:textColor="#FFFFFF"
             android:textSize="35sp"
             android:textStyle="bold"
