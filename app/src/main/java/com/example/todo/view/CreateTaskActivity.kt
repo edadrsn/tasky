@@ -46,7 +46,7 @@ class CreateTaskActivity : AppCompatActivity() {
         }
 
         // Yeni task eklendi TaskList Activity'sine git
-        val intent = Intent(this@CreateTaskActivity, TaskList::class.java)
+        val intent = Intent(this@CreateTaskActivity, HomeActivity::class.java)
         startActivity(intent)
     }
 }
