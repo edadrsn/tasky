@@ -35,15 +35,19 @@ class HomeActivity : AppCompatActivity() {
         auth = Firebase.auth
         db = Firebase.firestore
         taskArrayList = ArrayList<Task>()
-        getData()
+
 
         // RecyclerView ayarlarını yaptık
-        binding.recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity) // Layout manager ile her bir item'ın düzenini belirledik
-        taskAdapter = TaskRecyclerAdapter(taskArrayList) // Adapter'ı oluşturuyoruz ve postArrayList ile bağladık
+        binding.recyclerView.layoutManager =
+            LinearLayoutManager(this@HomeActivity) // Layout manager ile her bir item'ın düzenini belirledik
+        taskAdapter = TaskRecyclerAdapter(taskArrayList) { task ->
+            deleteTask(task)
+        } // Adapter'ı oluşturuyoruz ve postArrayList ile bağladık
         binding.recyclerView.adapter = taskAdapter // Adapter'ı RecyclerView'a bağladık
 
+        getData()
     }
-    
+
     //Görev oluştur butonu tanımlandı
     fun createTask(view: View) {
         val intent = Intent(this@HomeActivity, CreateTaskActivity::class.java)
@@ -61,18 +65,18 @@ class HomeActivity : AppCompatActivity() {
                     // Hata yoksa ve veri null değilse devam et
                     if (value != null) {
                         if (!value.isEmpty) {
-                            val documents = value.documents
 
                             // Yeni veri geldiğinde listeyi temizle
                             taskArrayList.clear()
 
                             // Firestore'daki her belgeyi döngüyle gez
-                            for (document in documents) {
-                                // taskTitle alanını alıyoruz, yoksa boş string veriyoruz
+                            for (document in value.documents) {
+                                // taskTitle ve id alanını alıyoruz, taskTitle yoksa boş string veriyoruz
+                                val taskId = document.id
                                 val taskTitle = document["taskTitle"] as? String ?: ""
 
                                 // Task modelinden bir nesne oluşturuyoruz
-                                val task = Task(taskTitle)
+                                val task = Task(taskId, taskTitle)
 
                                 // Listeye ekliyoruz
                                 taskArrayList.add(task)
@@ -86,15 +90,30 @@ class HomeActivity : AppCompatActivity() {
                             if (taskArrayList.isNotEmpty()) {
                                 binding.imageView3.visibility = View.GONE  // Resmi gizle
                                 binding.textView.visibility = View.GONE   // Yazıyı gizle
-                                binding.recyclerView.visibility=View.VISIBLE
+                                binding.recyclerView.visibility = View.VISIBLE
                             } else {
                                 binding.imageView3.visibility = View.VISIBLE  // Resmi göster
                                 binding.textView.visibility = View.VISIBLE   // Yazıyı göster
-                                binding.recyclerView.visibility=View.GONE
+                                binding.recyclerView.visibility = View.GONE
                             }
                         }
                     }
                 }
+            }
+    }
+
+
+    fun deleteTask(task:Task){
+        db.collection("Tasks")
+            .document(task.taskId) // taskId'yi kullanarak silme işlemi yapıyoruz
+            .delete()
+            .addOnSuccessListener {
+                taskArrayList.remove(task) // Listeyi güncelliyoruz
+                taskAdapter.notifyDataSetChanged() // Adapter'ı güncelliyoruz
+                Toast.makeText(this, "Task deleted successfully", Toast.LENGTH_SHORT).show()
+            }
+            .addOnFailureListener {
+                Toast.makeText(this, "Failed to delete task", Toast.LENGTH_SHORT).show()
             }
     }
 }
