@@ -20,11 +20,12 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView"
+            android:id="@+id/imageViewToDo"
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_marginStart="7dp"
+            android:clipToOutline="true"
             android:paddingStart="10dp"
             app:srcCompat="@drawable/todo_icon" />
 
@@ -37,6 +38,14 @@
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             android:textStyle="bold" />
+
+        <ImageView
+            android:id="@+id/menuIcon"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            android:layout_gravity="center"
+            android:src="@drawable/menu_icon" />
     </LinearLayout>
 
 
