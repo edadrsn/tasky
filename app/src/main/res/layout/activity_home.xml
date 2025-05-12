@@ -6,22 +6,18 @@
     android:layout_height="match_parent"
     android:background="#3B3B3B">
 
-
     <LinearLayout
         android:id="@+id/linearLayout5"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="55dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="50dp"
-        android:layout_marginBottom="60dp"
         android:background="@drawable/rounded_linear"
-        app:cornerRadius="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
 
         <ImageView
             android:id="@+id/imageView"
@@ -30,77 +26,74 @@
             android:layout_gravity="center"
             android:layout_marginStart="7dp"
             android:paddingStart="10dp"
-            app:srcCompat="@drawable/todo_icon"
-            tools:layout_editor_absoluteX="125dp"
-            tools:layout_editor_absoluteY="354dp" />
+            app:srcCompat="@drawable/todo_icon" />
 
         <TextView
-            android:layout_width="243dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
             android:text="TO-DO"
             android:textColor="#FFFFFF"
-            android:textSize="35sp"
-            android:textStyle="bold"
-            tools:layout_editor_absoluteX="197dp"
-            tools:layout_editor_absoluteY="354dp" />
-
+            android:textSize="30sp"
+            android:textStyle="bold" />
     </LinearLayout>
 
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
-        android:layout_width="386dp"
-        android:layout_height="597dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="30dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout5" />
+
 
     <ImageView
         android:id="@+id/imageView3"
         android:layout_width="225dp"
         android:layout_height="225dp"
-        android:layout_marginTop="100dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginTop="70dp"
         android:src="@drawable/home"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/textView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
-
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout5"
+        app:layout_constraintVertical_bias="1.0" />
 
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="152dp"
         android:text="Create Your First Task!"
         android:textColor="#9D9999"
         android:textSize="17sp"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/addButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView3" />
 
     <ImageButton
+        android:id="@+id/addButton"
         android:layout_width="50dp"
         android:layout_height="50dp"
-        android:layout_marginTop="533dp"
-        android:layout_marginBottom="63dp"
+        android:layout_marginBottom="48dp"
         android:background="@drawable/button_image"
         android:backgroundTint="#252525"
+        android:onClick="createTask"
         android:scaleType="fitXY"
         android:src="@drawable/add"
-        android:onClick="createTask"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.88"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
-
+        app:layout_constraintHorizontal_bias="0.908"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
