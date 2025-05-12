@@ -8,7 +8,9 @@ import com.example.todo.databinding.RecyclerRowBinding
 import com.example.todo.model.Task
 
 // RecyclerView için özel bir adapter sınıfı tanımladım
-class TaskRecyclerAdapter(private val taskList: ArrayList<Task>) :
+class TaskRecyclerAdapter(
+    private val taskList: ArrayList<Task>,
+    private val onDeleteClick:(task:Task)->Unit) :
     RecyclerView.Adapter<TaskRecyclerAdapter.TaskHolder>() {
 
     // Her bir satırı tutan ViewHolder sınıfı. RecyclerRowBinding üzerinden erişim sağlanıyor
@@ -27,7 +29,14 @@ class TaskRecyclerAdapter(private val taskList: ArrayList<Task>) :
 
     // Her bir satıra verileri bağladım
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
+        val task=taskList[position]
         // taskList'teki ilgili Task nesnesinin 'task' başlığını TextView'e atadım
-        holder.binding.recyclerRowTask.text = taskList[position].task
+        holder.binding.recyclerRowTask.text = task.task
+
+
+        //Silme butonuna tıklama olayı
+        holder.binding.deleteImage.setOnClickListener{
+            onDeleteClick(task)
+        }
     }
 }
