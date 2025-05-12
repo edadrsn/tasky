@@ -86,9 +86,11 @@ class HomeActivity : AppCompatActivity() {
                             if (taskArrayList.isNotEmpty()) {
                                 binding.imageView3.visibility = View.GONE  // Resmi gizle
                                 binding.textView.visibility = View.GONE   // Yazıyı gizle
+                                binding.recyclerView.visibility=View.VISIBLE
                             } else {
                                 binding.imageView3.visibility = View.VISIBLE  // Resmi göster
                                 binding.textView.visibility = View.VISIBLE   // Yazıyı göster
+                                binding.recyclerView.visibility=View.GONE
                             }
                         }
                     }
