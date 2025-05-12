@@ -20,12 +20,27 @@ import com.google.firebase.ktx.Firebase
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityHomeBinding
+    private lateinit var auth: FirebaseAuth
+    private lateinit var db: FirebaseFirestore
+    private lateinit var taskArrayList: ArrayList<Task>
+    private lateinit var taskAdapter: TaskRecyclerAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         binding = ActivityHomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        //Initialize işlemlerini yaptık
+        auth = Firebase.auth
+        db = Firebase.firestore
+        taskArrayList = ArrayList<Task>()
+        getData()
+
+        // RecyclerView ayarlarını yaptık
+        binding.recyclerView.layoutManager = LinearLayoutManager(this@HomeActivity) // Layout manager ile her bir item'ın düzenini belirledik
+        taskAdapter = TaskRecyclerAdapter(taskArrayList) // Adapter'ı oluşturuyoruz ve postArrayList ile bağladık
+        binding.recyclerView.adapter = taskAdapter // Adapter'ı RecyclerView'a bağladık
 
     }
     
@@ -35,4 +50,51 @@ class HomeActivity : AppCompatActivity() {
         startActivity(intent)
     }
 
+    //Firestore verileri alma
+    fun getData() {
+        db.collection("Tasks")
+            .addSnapshotListener { value, error ->
+                // Eğer bir hata oluşursa kullanıcıya göster
+                if (error != null) {
+                    Toast.makeText(this, error.localizedMessage, Toast.LENGTH_SHORT).show()
+                } else {
+                    // Hata yoksa ve veri null değilse devam et
+                    if (value != null) {
+                        if (!value.isEmpty) {
+                            val documents = value.documents
+
+                            // Yeni veri geldiğinde listeyi temizle
+                            taskArrayList.clear()
+
+                            // Firestore'daki her belgeyi döngüyle gez
+                            for (document in documents) {
+                                // taskTitle alanını alıyoruz, yoksa boş string veriyoruz
+                                val taskTitle = document["taskTitle"] as? String ?: ""
+
+                                // Task modelinden bir nesne oluşturuyoruz
+                                val task = Task(taskTitle)
+
+                                // Listeye ekliyoruz
+                                taskArrayList.add(task)
+                            }
+
+                            // RecyclerView'a bağlı adapter'a, verilerin güncellendiğini bildiriyoruz
+                            taskAdapter.notifyDataSetChanged()
+
+
+                            // Eğer taskList'te en az bir task varsa, ImageView ve TextView'ı gizle
+                            if (taskArrayList.isNotEmpty()) {
+                                binding.imageView3.visibility = View.GONE  // Resmi gizle
+                                binding.textView.visibility = View.GONE   // Yazıyı gizle
+                            } else {
+                                binding.imageView3.visibility = View.VISIBLE  // Resmi göster
+                                binding.textView.visibility = View.VISIBLE   // Yazıyı göster
+                            }
+                        }
+                    }
+                }
+            }
+    }
 }
+
+
