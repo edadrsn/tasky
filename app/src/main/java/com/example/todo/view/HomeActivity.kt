@@ -61,27 +61,36 @@ class HomeActivity : AppCompatActivity() {
             finish()
         }
 
-        
-        binding.menuIcon.setOnClickListener {
-            val popupMenu=PopupMenu(this,it)
-            popupMenu.menuInflater.inflate(R.menu.task_menu,popupMenu.menu)
-            popupMenu.setOnMenuItemClickListener { item->
-                when(item.itemId){
-                    R.id.signOut -> {
-                        listenerRegistration?.remove()
-                        Firebase.auth.signOut()
-                        startActivity(Intent(this@HomeActivity,MainActivity::class.java))
-                        finishAffinity()
-                        true
-                    }
-                    else -> false
 
+        // Menü ikonu tıklandığında popup menüyü gösteriyoruz
+        binding.menuIcon.setOnClickListener {
+            val popupMenu = PopupMenu(this, it)   // Popup menüsünü oluşturuyoruz
+
+            //task_menu.xml dosyasındaki menüyü kullanıyoruz
+            popupMenu.menuInflater.inflate(R.menu.task_menu, popupMenu.menu)
+
+            // Menü öğesine tıklanınca yapılacak işlem
+            popupMenu.setOnMenuItemClickListener { item ->
+                when (item.itemId) {
+                    // Çıkış yapma işlemi seçildiğinde
+                    R.id.signOut -> {
+                        // Eğer dinleyici varsa, onu kaldırıyoruz (Firestore dinleyicisi)
+                        listenerRegistration?.remove()
+
+                        // Firebase oturumunu kapatıyoruz
+                        Firebase.auth.signOut()
+                        startActivity(Intent(this@HomeActivity, MainActivity::class.java))
+                        finishAffinity()  // Uygulamayı bitiriyoruz
+                        true // İşlem başarılı
+                    }
+                    else -> false // Diğer menü seçenekleri için işlem yapmıyoruz
                 }
             }
 
+            // Popup menüsünü ekranda gösteriyoruz
             popupMenu.show()
-
         }
+
 
     }
 
@@ -117,7 +126,7 @@ class HomeActivity : AppCompatActivity() {
 
                             // Firestore'daki her belgeyi döngüyle gez
                             for (document in value.documents) {
-                                // taskTitle ve id alanını alıyoruz, taskTitle yoksa boş string veriyoruz
+                                // taskTitle ve id alanını aldık, taskTitle yoksa boş string vericez
                                 val taskId = document.id
                                 val taskTitle = document["taskTitle"] as? String ?: ""
 
