@@ -3,16 +3,19 @@ package com.example.todo.view
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.widget.PopupMenu
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.todo.R
 import com.example.todo.adapter.TaskRecyclerAdapter
 import com.example.todo.databinding.ActivityHomeBinding
 import com.example.todo.model.Task
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
@@ -24,6 +27,8 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var db: FirebaseFirestore
     private lateinit var taskArrayList: ArrayList<Task>
     private lateinit var taskAdapter: TaskRecyclerAdapter
+    private var listenerRegistration: ListenerRegistration? = null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,6 +42,7 @@ class HomeActivity : AppCompatActivity() {
         taskArrayList = ArrayList<Task>()
 
 
+
         // RecyclerView ayarlarını yaptık
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this@HomeActivity) // Layout manager ile her bir item'ın düzenini belirledik
@@ -45,7 +51,45 @@ class HomeActivity : AppCompatActivity() {
         } // Adapter'ı oluşturuyoruz ve postArrayList ile bağladık
         binding.recyclerView.adapter = taskAdapter // Adapter'ı RecyclerView'a bağladık
 
-        getData()
+
+
+        if (Firebase.auth.currentUser != null) {
+            getData()
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
+
+        
+        binding.menuIcon.setOnClickListener {
+            val popupMenu=PopupMenu(this,it)
+            popupMenu.menuInflater.inflate(R.menu.task_menu,popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { item->
+                when(item.itemId){
+                    R.id.signOut -> {
+                        listenerRegistration?.remove()
+                        Firebase.auth.signOut()
+                        startActivity(Intent(this@HomeActivity,MainActivity::class.java))
+                        finishAffinity()
+                        true
+                    }
+                    else -> false
+
+                }
+            }
+
+            popupMenu.show()
+
+        }
+
+    }
+
+
+    override fun onStop() {
+        super.onStop()
+        // Dinleyiciyi kaldırıcazki gereksiz dinleme işlemlerinden kaçınalım
+        listenerRegistration?.remove()
     }
 
     //Görev oluştur butonu tanımlandı
@@ -56,7 +100,9 @@ class HomeActivity : AppCompatActivity() {
 
     //Firestore verileri alma
     fun getData() {
-        db.collection("Tasks")
+        val currentUserId=Firebase.auth.currentUser?.uid
+        listenerRegistration=db.collection("Tasks")
+            .whereEqualTo("userId",currentUserId)
             .addSnapshotListener { value, error ->
                 // Eğer bir hata oluşursa kullanıcıya göster
                 if (error != null) {
