@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.todo.databinding.RecyclerRowBinding
 import com.example.todo.model.Task
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 // RecyclerView için özel bir adapter sınıfı tanımladım
 class TaskRecyclerAdapter(
@@ -32,7 +34,10 @@ class TaskRecyclerAdapter(
         val task=taskList[position]
         // taskList'teki ilgili Task nesnesinin 'task' başlığını TextView'e atadım
         holder.binding.recyclerRowTask.text = task.task
+        holder.binding.recyclerRowTaskDescription.text=task.taskDescription
 
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        holder.binding.recyclerRowTaskDate.text = dateFormat.format(task.taskDate)
 
         //Silme butonuna tıklama olayı
         holder.binding.deleteImage.setOnClickListener{
