@@ -37,7 +37,7 @@ class CreateTaskActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
-        binding.dateEditText.setOnClickListener {
+        binding.taskDate.setOnClickListener {
             showDatePicker()
         }
 
@@ -52,7 +52,7 @@ class CreateTaskActivity : AppCompatActivity() {
                 val selectedDate = Calendar.getInstance()
                 selectedDate.set(year, month, dayOfMonth)
                 val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-                binding.dateEditText.setText(sdf.format(selectedDate.time))
+                binding.taskDate.setText(sdf.format(selectedDate.time))
             },
             calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
@@ -68,8 +68,11 @@ class CreateTaskActivity : AppCompatActivity() {
         // Kullanıcı giriş yaptıysadevam et
         if (auth.currentUser != null) {
             val taskMap = hashMapOf<String, Any>()
-            taskMap.put("taskTitle", binding.taskText.text.toString())
             taskMap.put("userId", auth.currentUser!!.uid)
+            taskMap.put("taskTitle", binding.taskText.text.toString())
+            taskMap.put("taskDescription",binding.descriptionText.text.toString())
+            taskMap.put("taskDate",binding.taskDate.text.toString())
+
 
             // Firestore'a "Tasks" koleksiyonuna bu yeni veriyi ekleme
             firestore.collection("Tasks").add(taskMap)
