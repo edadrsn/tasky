@@ -1,7 +1,9 @@
 package com.example.todo.view
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,12 +14,17 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class CreateTaskActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateTaskBinding
     private lateinit var auth: FirebaseAuth
     private lateinit var firestore: FirebaseFirestore
+    private val calendar = Calendar.getInstance()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -25,27 +32,57 @@ class CreateTaskActivity : AppCompatActivity() {
         binding = ActivityCreateTaskBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+
+
         auth = FirebaseAuth.getInstance()
         firestore = FirebaseFirestore.getInstance()
 
+        binding.dateEditText.setOnClickListener {
+            showDatePicker()
+        }
+
     }
+
+    private fun showDatePicker() {
+        val calendar = Calendar.getInstance()
+
+        val datePickerDialog = DatePickerDialog(
+            this,
+            { _, year, month, dayOfMonth ->
+                val selectedDate = Calendar.getInstance()
+                selectedDate.set(year, month, dayOfMonth)
+                val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                binding.dateEditText.setText(sdf.format(selectedDate.time))
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+
+        datePickerDialog.show()
+    }
+
 
     //Verileri firestora kaydet
     fun createTask(view: View) {
         // Kullanıcı giriş yaptıysadevam et
         if (auth.currentUser != null) {
-            val taskMap = hashMapOf<String,Any>()
+            val taskMap = hashMapOf<String, Any>()
             taskMap.put("taskTitle", binding.taskText.text.toString())
-            taskMap.put("userId",auth.currentUser!!.uid)
+            taskMap.put("userId", auth.currentUser!!.uid)
 
             // Firestore'a "Tasks" koleksiyonuna bu yeni veriyi ekleme
             firestore.collection("Tasks").add(taskMap)
                 .addOnSuccessListener {
-                    Toast.makeText(this@CreateTaskActivity,"Task added successfully",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@CreateTaskActivity,
+                        "Task added successfully",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     finish()
                 }
                 .addOnFailureListener {
-                    Toast.makeText(this@CreateTaskActivity,"Couldn't add task", Toast.LENGTH_SHORT)
+                    Toast.makeText(this@CreateTaskActivity, "Couldn't add task", Toast.LENGTH_SHORT)
                         .show()
                     Log.e("FirestoreError", "Error: ${it.localizedMessage}")
                 }
