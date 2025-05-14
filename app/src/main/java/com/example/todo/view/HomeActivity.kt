@@ -19,6 +19,7 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.util.Date
 
 class HomeActivity : AppCompatActivity() {
 
@@ -129,9 +130,12 @@ class HomeActivity : AppCompatActivity() {
                                 // taskTitle ve id alanını aldık, taskTitle yoksa boş string vericez
                                 val taskId = document.id
                                 val taskTitle = document["taskTitle"] as? String ?: ""
+                                val taskDescription=document["taskDescription"] as? String ?: ""
+                                val taskDate = document["taskDate"] as? Date ?: Date()
+
 
                                 // Task modelinden bir nesne oluşturuyoruz
-                                val task = Task(taskId, taskTitle)
+                                val task = Task(taskId, taskTitle,taskDescription,taskDate)
 
                                 // Listeye ekliyoruz
                                 taskArrayList.add(task)
