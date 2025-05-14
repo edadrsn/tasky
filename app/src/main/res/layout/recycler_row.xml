@@ -1,39 +1,63 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:layout_marginBottom="10dp"
-    android:layout_marginHorizontal="20dp"
-    android:gravity="center"
-    android:background="@drawable/rounded_linear"
-    android:orientation="vertical">
+    android:layout_height="wrap_content"
+    android:layout_margin="12dp"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:background="@android:color/transparent">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="10dp">
+        android:orientation="vertical"
+        android:background="@drawable/rounded_linear"
+        android:padding="16dp">
 
         <TextView
             android:id="@+id/recyclerRowTask"
-            android:layout_width="0dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:text="Test Task"
+            android:text="Task Title"
             android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="19sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="end" />
 
-        <ImageView
-            android:id="@+id/deleteImage"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="8dp"
-            android:src="@drawable/delete_icon" />
+        <TextView
+            android:id="@+id/recyclerRowTaskDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Task Description"
+            android:textColor="#DDDDDD"
+            android:textSize="15sp"
+            android:maxLines="3"
+            android:ellipsize="end"
+            android:layout_marginTop="4dp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="8dp">
+
+            <TextView
+                android:id="@+id/recyclerRowTaskDate"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:layout_height="wrap_content"
+                android:text="13/05/2025"
+                android:textColor="#AAAAAA"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/deleteImage"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/delete_icon"
+                android:contentDescription="Delete Task" />
+        </LinearLayout>
+
     </LinearLayout>
-
-</LinearLayout>
-
-
+</androidx.cardview.widget.CardView>
