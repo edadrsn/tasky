@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="10dp"
         android:background="@drawable/rounded_linear"
         app:cornerRadius="20dp"
@@ -48,26 +48,44 @@
     <LinearLayout
         android:id="@+id/linearLayout6"
         android:layout_width="350dp"
-        android:layout_height="250dp"
+        android:layout_height="400dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="20dp"
-        android:background="@drawable/rounded_linear"
         android:gravity="center"
+        android:background="@drawable/rounded_linear"
         android:orientation="vertical"
         app:cornerRadius="20dp"
         app:layout_constraintBottom_toTopOf="@+id/imageView3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout5">
+
+        <LinearLayout
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+           <TextView
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="CREATE TASK"
+               android:textSize="20sp"
+               android:textColor="#FFFFFF"
+               android:textStyle="bold"/>
+
+        </LinearLayout>
 
 
         <LinearLayout
             android:layout_width="352dp"
-            android:layout_height="50dp"
-            android:layout_marginBottom="5dp"
-            android:gravity="center"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:paddingHorizontal="15dp"
             android:orientation="horizontal">
 
 
@@ -83,11 +101,10 @@
 
             <EditText
                 android:id="@+id/taskText"
-                android:layout_width="wrap_content"
+                android:layout_width="307dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
-                android:ems="17"
-                android:fontFamily="monospace"
+                android:ems="16"
                 android:hint="Task"
                 android:inputType="text"
                 android:paddingStart="10dp"
@@ -100,13 +117,14 @@
 
         <LinearLayout
             android:layout_width="352dp"
-            android:layout_height="50dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp">
 
             <ImageView
-
                 android:layout_width="20dp"
                 android:layout_height="20dp"
                 android:layout_gravity="center"
@@ -117,14 +135,17 @@
 
             <EditText
                 android:id="@+id/descriptionText"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_width="293dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:ems="17"
-                android:fontFamily="monospace"
                 android:hint="Description"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:maxLines="6"
+                android:minLines="6"
                 android:paddingStart="10dp"
+                android:scrollbars="vertical"
                 android:textColor="#FFFFFF"
                 android:textColorHint="#8E8A8A"
                 android:textSize="15sp" />
@@ -135,7 +156,9 @@
         <LinearLayout
             android:layout_width="354dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginBottom="10dp"
+            android:paddingHorizontal="15dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -152,16 +175,18 @@
 
             <EditText
                 android:id="@+id/dateEditText"
-                android:layout_width="300dp"
+                android:layout_width="wrap_content"
                 android:layout_height="50dp"
                 android:clickable="true"
+                android:ems="17"
                 android:focusable="false"
                 android:gravity="center_vertical"
                 android:hint="Select Date"
                 android:inputType="none"
-                android:textSize="15sp"
+                android:paddingStart="10dp"
                 android:textColor="#FFFFFF"
-                android:textColorHint="#8E8A8A" />
+                android:textColorHint="#8E8A8A"
+                android:textSize="15sp" />
 
 
         </LinearLayout>
@@ -170,6 +195,8 @@
         <LinearLayout
             android:layout_width="354dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:gravity="center"
             android:orientation="horizontal">
 
@@ -201,12 +228,11 @@
         android:id="@+id/imageView3"
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="80dp"
+        android:layout_marginBottom="10dp"
         android:src="@drawable/create_task"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout6" />
 
