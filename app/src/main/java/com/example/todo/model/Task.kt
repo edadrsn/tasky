@@ -4,7 +4,7 @@ import com.google.type.Date
 
 data class Task(
     val taskId:String="",
-    val task:String="",
+    val taskTitle:String="",
     val taskDescription:String="",
     val taskDate: java.util.Date
 )
