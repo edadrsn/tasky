@@ -33,7 +33,7 @@ class TaskRecyclerAdapter(
     override fun onBindViewHolder(holder: TaskHolder, position: Int) {
         val task=taskList[position]
         // taskList'teki ilgili Task nesnesinin 'task' başlığını TextView'e atadım
-        holder.binding.recyclerRowTask.text = task.task
+        holder.binding.recyclerRowTask.text = task.taskTitle
         holder.binding.recyclerRowTaskDescription.text=task.taskDescription
 
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
