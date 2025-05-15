@@ -19,7 +19,9 @@ import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import java.text.SimpleDateFormat
 import java.util.Date
+import java.util.Locale
 
 class HomeActivity : AppCompatActivity() {
 
@@ -47,10 +49,18 @@ class HomeActivity : AppCompatActivity() {
         // RecyclerView ayarlarını yaptık
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this@HomeActivity) // Layout manager ile her bir item'ın düzenini belirledik
-        taskAdapter = TaskRecyclerAdapter(taskArrayList) { task ->
-            deleteTask(task)
-        } // Adapter'ı oluşturuyoruz ve postArrayList ile bağladık
-        binding.recyclerView.adapter = taskAdapter // Adapter'ı RecyclerView'a bağladık
+        taskAdapter = TaskRecyclerAdapter(
+            taskArrayList,
+            onEditClick = { task ->
+                editTask(task)
+            },
+            onDeleteClick = { task ->
+                deleteTask(task)
+            }
+        )
+
+        binding.recyclerView.adapter = taskAdapter
+        // Adapter'ı RecyclerView'a bağladık
 
 
 
@@ -131,7 +141,19 @@ class HomeActivity : AppCompatActivity() {
                                 val taskId = document.id
                                 val taskTitle = document["taskTitle"] as? String ?: ""
                                 val taskDescription=document["taskDescription"] as? String ?: ""
-                                val taskDate = document["taskDate"] as? Date ?: Date()
+                                val taskDate: Date = when(val dateField = document["taskDate"]) {
+                                    is com.google.firebase.Timestamp -> dateField.toDate()
+                                    is Date -> dateField
+                                    is String -> {
+                                        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                                        try {
+                                            format.parse(dateField) ?: Date()
+                                        } catch (e: Exception) {
+                                            Date()
+                                        }
+                                    }
+                                    else -> Date()
+                                }
 
 
                                 // Task modelinden bir nesne oluşturuyoruz
@@ -162,6 +184,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
 
+    //Verileri silme
     fun deleteTask(task:Task){
         db.collection("Tasks")
             .document(task.taskId) // taskId'yi kullanarak silme işlemi yapıyoruz
@@ -174,6 +197,18 @@ class HomeActivity : AppCompatActivity() {
             .addOnFailureListener {
                 Toast.makeText(this, "Failed to delete task", Toast.LENGTH_SHORT).show()
             }
+    }
+
+
+    //Veri güncelleme
+    fun editTask(task:Task){
+        val intent=Intent(this@HomeActivity,EditTaskActivity::class.java)
+        intent.putExtra("taskId",task.taskId)
+        intent.putExtra("taskTitle",task.taskTitle)
+        intent.putExtra("taskDescription",task.taskDescription)
+        intent.putExtra("taskDate",task.taskDate.time)
+        startActivity(intent)
+
     }
 }
 
