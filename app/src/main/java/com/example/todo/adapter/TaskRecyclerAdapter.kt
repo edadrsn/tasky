@@ -12,6 +12,7 @@ import java.util.Locale
 // RecyclerView için özel bir adapter sınıfı tanımladım
 class TaskRecyclerAdapter(
     private val taskList: ArrayList<Task>,
+    private val onEditClick:(task:Task)->Unit,
     private val onDeleteClick:(task:Task)->Unit) :
     RecyclerView.Adapter<TaskRecyclerAdapter.TaskHolder>() {
 
@@ -42,6 +43,10 @@ class TaskRecyclerAdapter(
         //Silme butonuna tıklama olayı
         holder.binding.deleteImage.setOnClickListener{
             onDeleteClick(task)
+        }
+
+        holder.binding.editImage.setOnClickListener {
+            onEditClick(task)
         }
     }
 }
