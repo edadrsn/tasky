@@ -5,6 +5,225 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3B3B3B"
     tools:context=".view.EditTaskActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayoutEdit"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/rounded_linear"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayoutEdit2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="7dp"
+            android:paddingStart="10dp"
+            app:srcCompat="@drawable/todo_icon"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="354dp" />
+
+        <TextView
+            android:layout_width="243dp"
+            android:layout_height="match_parent"
+            android:text="TO-DO"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="197dp"
+            tools:layout_editor_absoluteY="354dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayoutEdit2"
+        android:layout_width="350dp"
+        android:layout_height="400dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginBottom="186dp"
+        android:background="@drawable/rounded_linear"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:cornerRadius="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayoutEdit">
+
+        <LinearLayout
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CREATE TASK"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="352dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp">
+
+
+            <ImageView
+                android:id="@+id/profile"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/pen_icon"
+                android:clipToOutline="true" />
+
+
+            <EditText
+                android:id="@+id/editTask"
+                android:layout_width="307dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:ems="16"
+                android:hint="Task"
+                android:inputType="text"
+                android:paddingStart="10dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8E8A8A"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="352dp"
+            android:layout_height="55dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp">
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/description"
+                android:clipToOutline="true" />
+
+
+            <EditText
+                android:id="@+id/editDescription"
+                android:layout_width="293dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:ems="17"
+                android:hint="Description"
+                android:inputType="textMultiLine"
+                android:lines="8"
+                android:maxLines="6"
+                android:minLines="6"
+                android:paddingStart="10dp"
+                android:scrollbars="vertical"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8E8A8A"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingHorizontal="15dp">
+
+
+            <ImageView
+
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_gravity="center"
+                android:layout_margin="8dp"
+                android:background="@drawable/date_icon"
+                android:clipToOutline="true" />
+
+
+            <EditText
+                android:id="@+id/editDatePicker"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:clickable="true"
+                android:ems="17"
+                android:focusable="false"
+                android:gravity="center_vertical"
+                android:hint="Select Date"
+                android:inputType="none"
+                android:paddingStart="10dp"
+                android:textColor="#FFFFFF"
+                android:textColorHint="#8E8A8A"
+                android:textSize="15sp" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="354dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/createTaskBtn"
+                android:layout_width="150dp"
+                android:layout_height="55dp"
+                android:layout_marginRight="22dp"
+                android:backgroundTint="#3B3B3B"
+                android:elevation="30dp"
+                android:fontFamily="monospace"
+                android:onClick="updateTask"
+                android:text="️Update Task"
+                android:textColor="#FFFFFF"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:cornerRadius="10dp"
+                app:strokeColor="#FFFFFF"
+                app:strokeWidth="2dp"
+                tools:ignore="OnClick"
+                tools:layout_editor_absoluteX="41dp"
+                tools:layout_editor_absoluteY="600dp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
