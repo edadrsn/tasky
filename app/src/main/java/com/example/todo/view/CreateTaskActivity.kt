@@ -10,12 +10,14 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.example.todo.databinding.ActivityCreateTaskBinding
+import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import java.text.SimpleDateFormat
 import java.util.Calendar
+import java.util.Date
 import java.util.Locale
 
 class CreateTaskActivity : AppCompatActivity() {
@@ -62,19 +64,27 @@ class CreateTaskActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-
-    //Verileri firestora kaydet
     fun createTask(view: View) {
-        // Kullanıcı giriş yaptıysadevam et
+        // Kullanıcı giriş yaptıysa devam et
         if (auth.currentUser != null) {
             val taskMap = hashMapOf<String, Any>()
-            taskMap.put("userId", auth.currentUser!!.uid)
-            taskMap.put("taskTitle", binding.taskText.text.toString())
-            taskMap.put("taskDescription",binding.descriptionText.text.toString())
-            taskMap.put("taskDate",binding.taskDate.text.toString())
+            taskMap["userId"] = auth.currentUser!!.uid
+            taskMap["taskTitle"] = binding.taskText.text.toString()
+            taskMap["taskDescription"] = binding.descriptionText.text.toString()
 
 
-            // Firestore'a "Tasks" koleksiyonuna bu yeni veriyi ekleme
+            val dateString = binding.taskDate.text.toString()
+            if (dateString.isBlank()) {
+                Toast.makeText(this, "Please select date", Toast.LENGTH_SHORT).show()
+                return
+            }
+
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val date = dateFormat.parse(dateString) ?: Date()
+            val timestamp = Timestamp(date)
+            taskMap["taskDate"] = timestamp
+
+            // Firestore'a veriyi ekle
             firestore.collection("Tasks").add(taskMap)
                 .addOnSuccessListener {
                     Toast.makeText(
@@ -90,6 +100,7 @@ class CreateTaskActivity : AppCompatActivity() {
                     Log.e("FirestoreError", "Error: ${it.localizedMessage}")
                 }
         }
+
 
         // Yeni task eklendi TaskList Activity'sine git
         val intent = Intent(this@CreateTaskActivity, HomeActivity::class.java)
