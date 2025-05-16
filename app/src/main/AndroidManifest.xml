@@ -13,6 +13,9 @@
         android:theme="@style/Theme.ToDo"
         tools:targetApi="31">
         <activity
+            android:name=".view.EditTaskActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.DateActivity"
             android:exported="false" />
         <activity
