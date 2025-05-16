@@ -2,6 +2,7 @@ package com.example.todo.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.PopupMenu
 import android.widget.Toast
@@ -105,12 +106,18 @@ class HomeActivity : AppCompatActivity() {
 
     }
 
+    override fun onStart() {
+        super.onStart()
+        getData()
+    }
+
 
     override fun onStop() {
         super.onStop()
         // Dinleyiciyi kaldırıcazki gereksiz dinleme işlemlerinden kaçınalım
         listenerRegistration?.remove()
     }
+
 
     //Görev oluştur butonu tanımlandı
     fun createTask(view: View) {
