@@ -46,11 +46,11 @@ class HomeActivity : AppCompatActivity() {
         taskArrayList = ArrayList<Task>()
 
 
-
         // RecyclerView ayarlarını yaptık
         binding.recyclerView.layoutManager =
             LinearLayoutManager(this@HomeActivity) // Layout manager ile her bir item'ın düzenini belirledik
         taskAdapter = TaskRecyclerAdapter(
+            this@HomeActivity,
             taskArrayList,
             onEditClick = { task ->
                 editTask(task)
@@ -62,7 +62,6 @@ class HomeActivity : AppCompatActivity() {
 
         binding.recyclerView.adapter = taskAdapter
         // Adapter'ı RecyclerView'a bağladık
-
 
 
         if (Firebase.auth.currentUser != null) {
@@ -95,6 +94,7 @@ class HomeActivity : AppCompatActivity() {
                         finishAffinity()  // Uygulamayı bitiriyoruz
                         true // İşlem başarılı
                     }
+
                     else -> false // Diğer menü seçenekleri için işlem yapmıyoruz
                 }
             }
@@ -127,9 +127,9 @@ class HomeActivity : AppCompatActivity() {
 
     //Firestore verileri alma
     fun getData() {
-        val currentUserId=Firebase.auth.currentUser?.uid
-        listenerRegistration=db.collection("Tasks")
-            .whereEqualTo("userId",currentUserId)
+        val currentUserId = Firebase.auth.currentUser?.uid
+        listenerRegistration = db.collection("Tasks")
+            .whereEqualTo("userId", currentUserId)
             .addSnapshotListener { value, error ->
                 // Eğer bir hata oluşursa kullanıcıya göster
                 if (error != null) {
@@ -147,24 +147,26 @@ class HomeActivity : AppCompatActivity() {
                                 // taskTitle ve id alanını aldık, taskTitle yoksa boş string vericez
                                 val taskId = document.id
                                 val taskTitle = document["taskTitle"] as? String ?: ""
-                                val taskDescription=document["taskDescription"] as? String ?: ""
-                                val taskDate: Date = when(val dateField = document["taskDate"]) {
+                                val taskDescription = document["taskDescription"] as? String ?: ""
+                                val taskDate: Date = when (val dateField = document["taskDate"]) {
                                     is com.google.firebase.Timestamp -> dateField.toDate()
                                     is Date -> dateField
                                     is String -> {
-                                        val format = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+                                        val format =
+                                            SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
                                         try {
                                             format.parse(dateField) ?: Date()
                                         } catch (e: Exception) {
                                             Date()
                                         }
                                     }
+
                                     else -> Date()
                                 }
 
 
                                 // Task modelinden bir nesne oluşturuyoruz
-                                val task = Task(taskId, taskTitle,taskDescription,taskDate)
+                                val task = Task(taskId, taskTitle, taskDescription, taskDate)
 
                                 // Listeye ekliyoruz
                                 taskArrayList.add(task)
@@ -192,7 +194,7 @@ class HomeActivity : AppCompatActivity() {
 
 
     //Verileri silme
-    fun deleteTask(task:Task){
+    fun deleteTask(task: Task) {
         db.collection("Tasks")
             .document(task.taskId) // taskId'yi kullanarak silme işlemi yapıyoruz
             .delete()
@@ -208,12 +210,12 @@ class HomeActivity : AppCompatActivity() {
 
 
     //Veri güncelleme
-    fun editTask(task:Task){
-        val intent=Intent(this@HomeActivity,EditTaskActivity::class.java)
-        intent.putExtra("taskId",task.taskId)
-        intent.putExtra("taskTitle",task.taskTitle)
-        intent.putExtra("taskDescription",task.taskDescription)
-        intent.putExtra("taskDate",task.taskDate.time)
+    fun editTask(task: Task) {
+        val intent = Intent(this@HomeActivity, EditTaskActivity::class.java)
+        intent.putExtra("taskId", task.taskId)
+        intent.putExtra("taskTitle", task.taskTitle)
+        intent.putExtra("taskDescription", task.taskDescription)
+        intent.putExtra("taskDate", task.taskDate.time)
         startActivity(intent)
 
     }
