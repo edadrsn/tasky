@@ -1,6 +1,8 @@
 package com.example.todo.view
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -32,5 +34,10 @@ class DetailTaskActivity : AppCompatActivity() {
         binding.detailTaskDescription.text=taskDescription
         binding.detailTaskDate.text= SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()).format(taskDate)
 
+    }
+
+    fun previousPage(view: View){
+        val intent= Intent(this@DetailTaskActivity,HomeActivity::class.java)
+        startActivity(intent)
     }
 }
