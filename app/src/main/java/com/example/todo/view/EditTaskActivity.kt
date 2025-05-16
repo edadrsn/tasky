@@ -119,4 +119,10 @@ class EditTaskActivity : AppCompatActivity() {
             }
 
         }
+
+
+    fun previousPage(view:View){
+        val intent=Intent(this@EditTaskActivity,HomeActivity::class.java)
+        startActivity(intent)
+    }
 }
