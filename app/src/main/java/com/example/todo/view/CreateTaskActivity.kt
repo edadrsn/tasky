@@ -106,4 +106,9 @@ class CreateTaskActivity : AppCompatActivity() {
         val intent = Intent(this@CreateTaskActivity, HomeActivity::class.java)
         startActivity(intent)
     }
+
+    fun previousPage(view: View) {
+        val intent = Intent(this@CreateTaskActivity, HomeActivity::class.java)
+        startActivity(intent)
+    }
 }
