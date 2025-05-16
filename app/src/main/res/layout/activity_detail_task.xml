@@ -5,6 +5,110 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#3B3B3B"
     tools:context=".view.DetailTaskActivity">
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rounded_linear"
+        app:cornerRadius="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="center"
+            android:layout_marginStart="7dp"
+            android:paddingStart="10dp"
+            app:srcCompat="@drawable/todo_icon"
+            tools:layout_editor_absoluteX="125dp"
+            tools:layout_editor_absoluteY="354dp" />
+
+        <TextView
+            android:layout_width="243dp"
+            android:layout_height="match_parent"
+            android:text="TO-DO"
+            android:textColor="#FFFFFF"
+            android:textSize="35sp"
+            android:textStyle="bold"
+            tools:layout_editor_absoluteX="197dp"
+            tools:layout_editor_absoluteY="354dp" />
+    </LinearLayout>
+
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true"
+        android:padding="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
+        app:layout_constraintVertical_bias="0.102">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginVertical="10dp"
+            android:backgroundTint="#1F1F1F"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="10dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="30dp">
+
+
+                <TextView
+                    android:id="@+id/detailTaskTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-medium"
+                    android:letterSpacing="0.05"
+                    android:paddingBottom="16dp"
+                    android:text="Task Title"
+                    android:textColor="#FFFFFF"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+
+
+                <TextView
+                    android:id="@+id/detailTaskDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif"
+                    android:lineSpacingExtra="6dp"
+                    android:paddingBottom="16dp"
+                    android:text="Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description.Task description."
+                    android:textColor="#DDDDDD"
+                    android:textSize="18sp" />
+
+
+                <TextView
+                    android:id="@+id/detailTaskDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:paddingBottom="8dp"
+                    android:text="16 March 2025"
+                    android:textColor="#AAAAAA"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
