@@ -41,20 +41,27 @@
             android:textStyle="bold"
             tools:layout_editor_absoluteX="197dp"
             tools:layout_editor_absoluteY="354dp" />
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="25dp"
+            android:layout_gravity="center"
+            android:src="@drawable/back_icon"
+            android:onClick="previousPage"
+            tools:ignore="OnClick" />
     </LinearLayout>
 
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:fillViewport="true"
         android:padding="16dp"
+        android:scrollbars="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout"
-        app:layout_constraintVertical_bias="0.102">
+        app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
         <androidx.cardview.widget.CardView
             android:layout_width="match_parent"
