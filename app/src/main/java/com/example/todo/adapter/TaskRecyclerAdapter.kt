@@ -1,16 +1,21 @@
 package com.example.todo.adapter
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.Recycler
 import com.example.todo.databinding.RecyclerRowBinding
 import com.example.todo.model.Task
+import com.example.todo.view.DetailTaskActivity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+
 // RecyclerView için özel bir adapter sınıfı tanımladım
 class TaskRecyclerAdapter(
+    private val context:Context,
     private val taskList: ArrayList<Task>,
     private val onEditClick:(task:Task)->Unit,
     private val onDeleteClick:(task:Task)->Unit) :
@@ -44,9 +49,21 @@ class TaskRecyclerAdapter(
         holder.binding.deleteImage.setOnClickListener{
             onDeleteClick(task)
         }
-
+        //Düzenleme
         holder.binding.editImage.setOnClickListener {
             onEditClick(task)
         }
+
+        //Detay sayfasına git
+        holder.binding.detailTask.setOnClickListener{
+            val intent=Intent(context,DetailTaskActivity::class.java)
+            intent.putExtra("taskId",task.taskId)
+            intent.putExtra("taskTitle",task.taskTitle)
+            intent.putExtra("taskDescription",task.taskDescription)
+            intent.putExtra("taskDate",task.taskDate.time)
+            context.startActivity(intent)
+
+        }
+
     }
 }
